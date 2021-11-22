@@ -75,6 +75,22 @@ describe('HTTP server', () => {
       expect(responseJson.message).toEqual('tidak dapat membuat user baru karena properti yang dibutuhkan tidak ada');
     });
 
+    describe('when GET /', () => {
+      it('should return 200 and hello world', async () => {
+        // Arrange
+        const server = await createServer({});
+        // Action
+        const response = await server.inject({
+          method: 'GET',
+          url: '/',
+        });
+        // Assert
+        const responseJson = JSON.parse(response.payload);
+        expect(response.statusCode).toEqual(200);
+        expect(responseJson.value).toEqual('Hello world!');
+      });
+    });
+
     it('should response 400 when request payload not meet data type specification', async () => {
       // Arrange
       const requestPayload = {
